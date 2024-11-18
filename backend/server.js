@@ -6,6 +6,9 @@ import jwt from 'jsonwebtoken'
 const port = 3000;
 const app = express();
 
+app.use(express.json())
+const JWT_SECRET = "12345"
+
 app.post("/api/v1/signup", async (req,res) => {
     
     const username = req.body.username
@@ -38,7 +41,7 @@ app.post("/api/v1/signin", async (req,res) => {
     if(user){
         const token = jwt.sign({
             id: user
-        })
+        }, JWT_SECRET)
     }else{
         res.status(403).json({
             message:"Incorrect Credentials"
